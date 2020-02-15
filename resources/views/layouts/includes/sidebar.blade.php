@@ -12,6 +12,9 @@
             <a href="{{url('students')}}" >Students</a>
         </div>
         <div class="card-body">
+            <a href="{{route('studentAttendence')}}" >Student Attendence</a>
+        </div>
+        <div class="card-body">
             <a href="" >Staffs</a>
         </div>
 

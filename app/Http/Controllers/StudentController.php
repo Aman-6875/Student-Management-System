@@ -10,12 +10,42 @@ use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
+
         $departments = department::all();
         $semesters = semester::all();
-        $datas = student::all();
+        $datas = student::select('*');
+        if ($search = $request->query('query'))
+        {
+
+            $datas = $datas->where(function ($q) use($search){
+                $q->orWhere('name', 'like', '%'.$search.'%');
+            });
+
+        }
+        $datas = $datas->get();
+
         return view('student.index', compact('datas','departments','semesters'));
+//        return view('student.index');
     }
+
+    public function tableLoad(Request $request){
+        $departments = department::all();
+        $semesters = semester::all();
+        $datas = student::select('*');
+        if ($search = $request->query('query'))
+        {
+
+            $datas = $datas->where(function ($q) use($search){
+                $q->orWhere('name', 'like', '%'.$search.'%');
+            });
+
+        }
+        $datas = $datas->get();
+
+        return $datas;
+    }
+
     public function create(){
         $departments = department::all();
         $semesters = semester::all();
@@ -90,12 +120,14 @@ class StudentController extends Controller
     public function studentSearch(){
         return view('student.studentSearch');
     }
+
+
     public function action(Request $request){
         $departments = department::all();
         $semesters = semester::all();
         if ($request->ajax()){
             $query = $request->get('query');
-            if ($query!='')
+            if ($query!= null)
             {
                 $data = DB::table('students')
                     ->where('id','like','%'.$query.'%')
@@ -111,14 +143,17 @@ class StudentController extends Controller
 
             }
             else{
+
                 $data = DB::table('students')
                     ->orderby('id','desc')
                     ->get();
+
 
             }
             $total_row = $data->count();
             if($total_row > 0)
             {
+                dd($data);
                 foreach ($data as $row)
                 {
                     $output = '

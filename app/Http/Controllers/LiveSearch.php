@@ -31,6 +31,7 @@ class LiveSearch extends Controller
 
            }
            else{
+
                $data = DB::table('students')
                    ->orderby('id','desc')
                    ->get();

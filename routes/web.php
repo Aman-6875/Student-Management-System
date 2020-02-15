@@ -39,6 +39,7 @@ Route::delete('semester/semesterDelete/{id}','SemesterController@semesterDelete'
 //student route
 
 Route::get('students','StudentController@index');
+
 Route::get('student/create','StudentController@create');
 Route::post('student/studentSave','StudentController@studentSave');
 Route::get('student/studentEdit/{id}','StudentController@studentEdit');
@@ -48,7 +49,12 @@ Route::delete('student/studentDelete/{id}','StudentController@studentDelete');
 //Route::get('student/action', 'StudentController@action');
 Route::get('/student/studentSearch', 'StudentController@studentSearch')->name('studentSearch');
 Route::get('/student/studentSearch/action', 'StudentController@action')->name('studentSearch.action');
+Route::get('/student/studentSearch/tableLoad', 'StudentController@tableLoad')->name('studentSearch.tableLoad');
+
 
 //search
-Route::get('LiveSearch/action', 'LiveSearch@action')->name('LiveSearch.action');
+//Route::get('LiveSearch/action', 'LiveSearch@action')->name('LiveSearch.action');
 
+//Attendence
+Route::get('Attendence/studentAttendence','StudentAttendenceController@studentAttendence')->name('studentAttendence');
+Route::post('Attendence/saveAttendence','StudentAttendenceController@saveAttendence')->name('saveAttendence');
